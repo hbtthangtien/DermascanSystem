@@ -14,5 +14,7 @@ namespace Domain.Entities
         public User? User { get; set; }
 
         public Doctor? Doctor { get; set; }
+
+        public ICollection<AccountToken> Tokens { get; set; } = new List<AccountToken>();
     }
 }

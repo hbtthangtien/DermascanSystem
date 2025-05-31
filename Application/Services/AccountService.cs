@@ -5,15 +5,9 @@ using Application.Interfaces.IServices;
 using Application.IUnitOfWorks;
 using Domain.Entities;
 using Mapster;
-using MapsterMapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UserRole = CoreLayer.Enums.UserRole;
+
 
 namespace Application.Services
 {
@@ -36,7 +30,7 @@ namespace Application.Services
                 var account = dto.Adapt<Account>();
                 var user = dto.Adapt<User>();
                 account.HashPassword = BCrypt.Net.BCrypt.HashPassword(dto.HashPassword);
-                account.Role = UserRole.USER;
+                account.Role = Domain.Enums.UserRole.USER;
                 await _unitOfWork.Accounts.AddAsync(account);
                 user.Account = account;
                 await _unitOfWork.Users.AddAsync(user);

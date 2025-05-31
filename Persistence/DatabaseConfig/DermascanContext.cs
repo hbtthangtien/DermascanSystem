@@ -51,7 +51,7 @@ namespace Persistence.DatabaseConfig
 
         public virtual DbSet<UserSubscription> UsersSubscriptions { get; set; }
 
-
+        public virtual DbSet<AccountToken> AccountTokens { get; set; }
 
         #endregion
 
@@ -64,6 +64,12 @@ namespace Persistence.DatabaseConfig
                 entity.HasOne(e => e.User)
                       .WithOne(e => e.Account)
                       .HasForeignKey<User>(e => e.AccountId);
+
+
+                entity.HasMany(e => e.Tokens)
+                      .WithOne(e => e.Account)
+                      .HasForeignKey(e => e.AccountId);
+
                 entity.HasIndex(e => e.Email).IsUnique(true);
             });
 
@@ -184,6 +190,7 @@ namespace Persistence.DatabaseConfig
                 entity.HasMany(e => e.UserSubscriptions)
                     .WithOne(e => e.User)
                     .HasForeignKey(e => e.UserID);
+
                 entity.HasIndex(e => e.Phone).IsUnique(true);
             });
             modelBuilder.Entity<Consultation>()

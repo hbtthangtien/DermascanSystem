@@ -21,6 +21,7 @@ namespace Domain.Entities
         public ICollection<Order> Orders { get; set; } = new List<Order>();
         public ICollection<ProgressPhoto> ProgressPhotos { get; set; } = new List<ProgressPhoto>();
         public ICollection<SkinAnalysis> SkinAnalyses { get; set; } = new List<SkinAnalysis>();
-        public ICollection<UserSubscription> UserSubscriptions { get; set; } = new HashSet<UserSubscription>();
+        public ICollection<UserSubscription> UserSubscriptions { get; set; } = new List<UserSubscription>();
+
     }
 }

@@ -8,11 +8,11 @@ namespace Domain.Entities
 {
     public class EmergencyRequest
     {
-        public int Id { get; set; }
-        public int UserID { get; set; }
+        public long Id { get; set; }
+        public long UserID { get; set; }
         public DateTime RaisedAt { get; set; }
         public string SymptomsText { get; set; }
-        public int? AnalysisID { get; set; }
+        public long? AnalysisID { get; set; }
         public string AIResponseJSON { get; set; }
         public bool DoctorEscalated { get; set; }
 

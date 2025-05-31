@@ -9,11 +9,11 @@ namespace Domain.Entities
 {
     public class Order
     {
-        public int Id { get; set; }
-        public int UserID { get; set; }
-        public int ProductID { get; set; }
-        public int? AnalysisID { get; set; }
-        public int PartnerID { get; set; }
+        public long Id { get; set; }
+        public long UserID { get; set; }
+        public long ProductID { get; set; }
+        public long? AnalysisID { get; set; }
+        public long PartnerID { get; set; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal CommissionEarned { get; set; }

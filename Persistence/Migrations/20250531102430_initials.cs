@@ -15,9 +15,9 @@ namespace Persistence.Migrations
                 name: "Accounts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     HashPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false)
                 },
@@ -30,7 +30,7 @@ namespace Persistence.Migrations
                 name: "Partners",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PartnerType = table.Column<int>(type: "int", nullable: false),
@@ -45,7 +45,7 @@ namespace Persistence.Migrations
                 name: "SkinZones",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -58,7 +58,7 @@ namespace Persistence.Migrations
                 name: "SubscriptionPlans",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -77,9 +77,9 @@ namespace Persistence.Migrations
                 name: "Doctors",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AccountId = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<long>(type: "bigint", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LicenseNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Specialty = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -101,9 +101,9 @@ namespace Persistence.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AccountId = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<long>(type: "bigint", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -123,7 +123,7 @@ namespace Persistence.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -131,7 +131,7 @@ namespace Persistence.Migrations
                     AffiliateURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: true),
-                    PartnerID = table.Column<int>(type: "int", nullable: true),
+                    PartnerID = table.Column<long>(type: "bigint", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -148,9 +148,9 @@ namespace Persistence.Migrations
                 name: "CoachPrograms",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<long>(type: "bigint", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CurrentWeek = table.Column<int>(type: "int", nullable: false),
@@ -172,10 +172,10 @@ namespace Persistence.Migrations
                 name: "Consultations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(type: "int", nullable: false),
-                    DoctorID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<long>(type: "bigint", nullable: false),
+                    DoctorID = table.Column<long>(type: "bigint", nullable: false),
                     ScheduledStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ScheduledEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ActualDuration = table.Column<int>(type: "int", nullable: true),
@@ -205,9 +205,9 @@ namespace Persistence.Migrations
                 name: "DiaryEntries",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<long>(type: "bigint", nullable: false),
                     EntryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     WaterIntakeL = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true),
                     SleepHours = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true),
@@ -230,9 +230,9 @@ namespace Persistence.Migrations
                 name: "Notifications",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<long>(type: "bigint", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NotifType = table.Column<int>(type: "int", nullable: false),
@@ -254,10 +254,10 @@ namespace Persistence.Migrations
                 name: "SkinAnalysis",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(type: "int", nullable: false),
-                    PlanID = table.Column<int>(type: "int", nullable: true),
+                    UserID = table.Column<long>(type: "bigint", nullable: false),
+                    PlanID = table.Column<long>(type: "bigint", nullable: true),
                     CapturedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MediaPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OverallScore = table.Column<byte>(type: "tinyint", nullable: true),
@@ -291,10 +291,10 @@ namespace Persistence.Migrations
                 name: "UsersSubscriptions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(type: "int", nullable: false),
-                    PlanID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<long>(type: "bigint", nullable: false),
+                    PlanID = table.Column<long>(type: "bigint", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -320,8 +320,8 @@ namespace Persistence.Migrations
                 name: "AnalysisZones",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    ZoneID = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    ZoneID = table.Column<long>(type: "bigint", nullable: false),
                     Score = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
@@ -345,12 +345,12 @@ namespace Persistence.Migrations
                 name: "EmergencyRequests",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<long>(type: "bigint", nullable: false),
                     RaisedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SymptomsText = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AnalysisID = table.Column<int>(type: "int", nullable: true),
+                    AnalysisID = table.Column<long>(type: "bigint", nullable: true),
                     AIResponseJSON = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DoctorEscalated = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -374,12 +374,12 @@ namespace Persistence.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(type: "int", nullable: false),
-                    ProductID = table.Column<int>(type: "int", nullable: false),
-                    AnalysisID = table.Column<int>(type: "int", nullable: true),
-                    PartnerID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<long>(type: "bigint", nullable: false),
+                    ProductID = table.Column<long>(type: "bigint", nullable: false),
+                    AnalysisID = table.Column<long>(type: "bigint", nullable: true),
+                    PartnerID = table.Column<long>(type: "bigint", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     UnitPrice = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
                     CommissionEarned = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
@@ -418,12 +418,12 @@ namespace Persistence.Migrations
                 name: "ProgressPhotos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<long>(type: "bigint", nullable: false),
                     TakenAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AnalysisID = table.Column<int>(type: "int", nullable: true)
+                    AnalysisID = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -445,12 +445,12 @@ namespace Persistence.Migrations
                 name: "Recommendations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AnalysisID = table.Column<int>(type: "int", nullable: false),
+                    AnalysisID = table.Column<long>(type: "bigint", nullable: false),
                     RecommendationType = table.Column<int>(type: "int", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductID = table.Column<int>(type: "int", nullable: true)
+                    ProductID = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -467,6 +467,12 @@ namespace Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Accounts_Email",
+                table: "Accounts",
+                column: "Email",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AnalysisZones_ZoneID",

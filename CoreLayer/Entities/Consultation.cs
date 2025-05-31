@@ -1,4 +1,5 @@
-﻿using CoreLayer.Enums;
+﻿using Domain.Commons;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Consultation
+    public class Consultation : BaseEntity
     {
-        public int Id { get; set; }
-        public int UserID { get; set; }
-        public int DoctorID { get; set; }
+        public long UserID { get; set; }
+        public long DoctorID { get; set; }
         public DateTime ScheduledStart { get; set; }
         public DateTime ScheduledEnd { get; set; }
         public int? ActualDuration { get; set; }

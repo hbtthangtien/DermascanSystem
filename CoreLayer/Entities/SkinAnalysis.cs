@@ -8,9 +8,9 @@ namespace Domain.Entities
 {
     public class SkinAnalysis
     {
-        public int Id { get; set; }
-        public int UserID { get; set; }
-        public int? PlanID { get; set; }
+        public long Id { get; set; }
+        public long UserID { get; set; }
+        public long? PlanID { get; set; }
         public DateTime CapturedAt { get; set; }
         public string MediaPath { get; set; }
         public byte? OverallScore { get; set; }

@@ -9,8 +9,8 @@ namespace Domain.Entities
 {
     public class Notification
     {
-        public int Id { get; set; }
-        public int UserID { get; set; }
+        public long Id { get; set; }
+        public long UserID { get; set; }
         public string Title { get; set; }
         public string Body { get; set; }
         public NotifType NotifType { get; set; }

@@ -8,7 +8,7 @@ namespace Domain.Entities
 {
     public class SkinZone
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
 
         public ICollection<AnalysisZoneScore> AnalysisZoneScores { get; set; } = new List<AnalysisZoneScore>();

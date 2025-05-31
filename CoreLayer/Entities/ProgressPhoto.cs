@@ -8,11 +8,11 @@ namespace Domain.Entities
 {
     public class ProgressPhoto
     {
-        public int Id { get; set; }
-        public int UserID { get; set; }
+        public long Id { get; set; }
+        public long UserID { get; set; }
         public DateTime TakenAt { get; set; }
         public string ImagePath { get; set; }
-        public int? AnalysisID { get; set; }
+        public long? AnalysisID { get; set; }
 
         public User? User { get; set; }
         public SkinAnalysis? Analysis { get; set; }

@@ -1,4 +1,4 @@
-﻿using CoreLayer.Enums;
+﻿using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +9,11 @@ namespace Domain.Entities
 {
     public class AIRecommendation
     {
-        public int Id { get; set; }
-        public int AnalysisID { get; set; }
+        public long Id { get; set; }
+        public long AnalysisID { get; set; }
         public RecommendationType RecommendationType { get; set; }
         public string Message { get; set; }
-        public int? ProductID { get; set; }
+        public long? ProductID { get; set; }
 
         public SkinAnalysis? Analysis { get; set; }
         public Product? Product { get; set; }

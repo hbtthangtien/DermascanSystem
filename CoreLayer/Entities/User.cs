@@ -8,11 +8,11 @@ namespace Domain.Entities
 {
     public class User
     {
-        public int Id { get; set; }
-        public int AccountId { get; set; }
+        public long Id { get; set; }
+        public long AccountId { get; set; }
         public string FullName { get; set; }
         public string Phone { get; set; }
-        public DateTime? CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; } = DateTime.Now;
         public Account? Account { get; set; }
         public ICollection<CoachProgram> CoachPrograms { get; set; } = new List<CoachProgram>();
         public ICollection<Consultation> Consultations { get; set; } = new List<Consultation>();

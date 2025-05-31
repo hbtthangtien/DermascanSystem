@@ -8,9 +8,9 @@ namespace Domain.Entities
 {
     public class UserSubscription
     {
-        public int Id { get; set; }
-        public int UserID { get; set; }
-        public int PlanID { get; set; }
+        public long Id { get; set; }
+        public long UserID { get; set; }
+        public long PlanID { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string Status { get; set; }

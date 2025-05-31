@@ -1,11 +1,6 @@
 ﻿using Application.Interfaces.IRepositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.IUnitOfWork
+namespace Application.IUnitOfWorks
 {
     public interface IUnitOfWork : IDisposable
     {
@@ -45,8 +40,11 @@ namespace Application.IUnitOfWork
 
         public IUserSubsciptionRepository UserSubsciptions { get; }
 
+        IBaseRepository<T> GetRepository<T>() where T : class;
         public Task BeginTransactionAsync();
         public Task CommitTransactionAsync();
         public Task RollbackTransactionAsync();
+        public Task SaveChangeAsync();
+
     }
 }

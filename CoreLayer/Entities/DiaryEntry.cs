@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Commons;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class DiaryEntry
+    public class DiaryEntry : BaseEntity
     {
-        public int Id { get; set; }
-        public int UserID { get; set; }
+        public long UserID { get; set; }
         public DateTime EntryDate { get; set; }
         public decimal? WaterIntakeL { get; set; }
         public decimal? SleepHours { get; set; }

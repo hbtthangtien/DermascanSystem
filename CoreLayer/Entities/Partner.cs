@@ -9,7 +9,7 @@ namespace Domain.Entities
 {
     public class Partner
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public PartnerType PartnerType { get; set; }
         public decimal CommissionRate { get; set; }

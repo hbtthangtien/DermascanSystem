@@ -12,8 +12,8 @@ using Persistence.DatabaseConfig;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DermascanContext))]
-    [Migration("20250529152438_initials")]
-    partial class initials
+    [Migration("20250531104657_update_index")]
+    partial class update_index
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,21 +27,21 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.AIRecommendation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("AnalysisID")
-                        .HasColumnType("int");
+                    b.Property<long>("AnalysisID")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProductID")
-                        .HasColumnType("int");
+                    b.Property<long?>("ProductID")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("RecommendationType")
                         .HasColumnType("int");
@@ -57,15 +57,15 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Account", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("HashPassword")
                         .IsRequired()
@@ -76,19 +76,22 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("Domain.Entities.AnalysisZoneScore", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
 
                     b.Property<byte>("Score")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("ZoneID")
-                        .HasColumnType("int");
+                    b.Property<long>("ZoneID")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -99,11 +102,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.CoachProgram", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("CurrentWeek")
                         .HasColumnType("int");
@@ -120,8 +123,8 @@ namespace Persistence.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<long>("UserID")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -132,17 +135,17 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Consultation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int?>("ActualDuration")
                         .HasColumnType("int");
 
-                    b.Property<int>("DoctorID")
-                        .HasColumnType("int");
+                    b.Property<long>("DoctorID")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("PricePaid")
                         .HasPrecision(18, 4)
@@ -164,8 +167,8 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<long>("UserID")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -178,11 +181,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.DiaryEntry", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("AIComment")
                         .IsRequired()
@@ -203,8 +206,8 @@ namespace Persistence.Migrations
                         .HasPrecision(5, 2)
                         .HasColumnType("decimal(5,2)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<long>("UserID")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal?>("WaterIntakeL")
                         .HasPrecision(5, 2)
@@ -219,14 +222,14 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Doctor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
+                    b.Property<long>("AccountId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -258,18 +261,18 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.EmergencyRequest", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("AIResponseJSON")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("AnalysisID")
-                        .HasColumnType("int");
+                    b.Property<long?>("AnalysisID")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("DoctorEscalated")
                         .HasColumnType("bit");
@@ -281,8 +284,8 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<long>("UserID")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -295,11 +298,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Notification", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Body")
                         .IsRequired()
@@ -318,8 +321,8 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<long>("UserID")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -330,14 +333,14 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Order", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<int?>("AnalysisID")
-                        .HasColumnType("int");
+                    b.Property<long?>("AnalysisID")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("CommissionEarned")
                         .HasPrecision(18, 4)
@@ -349,11 +352,11 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("OrderedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PartnerID")
-                        .HasColumnType("int");
+                    b.Property<long>("PartnerID")
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
+                    b.Property<long>("ProductID")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -362,8 +365,8 @@ namespace Persistence.Migrations
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<long>("UserID")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -380,11 +383,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Partner", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("CommissionRate")
                         .HasPrecision(5, 2)
@@ -404,11 +407,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("AffiliateURL")
                         .IsRequired()
@@ -433,8 +436,8 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PartnerID")
-                        .HasColumnType("int");
+                    b.Property<long?>("PartnerID")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal?>("Price")
                         .HasPrecision(18, 4)
@@ -449,14 +452,14 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.ProgressPhoto", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<int?>("AnalysisID")
-                        .HasColumnType("int");
+                    b.Property<long?>("AnalysisID")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
@@ -465,8 +468,8 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("TakenAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<long>("UserID")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -479,11 +482,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.SkinAnalysis", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<byte?>("AcneScore")
                         .HasColumnType("tinyint");
@@ -510,8 +513,8 @@ namespace Persistence.Migrations
                     b.Property<byte?>("PigmentationScore")
                         .HasColumnType("tinyint");
 
-                    b.Property<int?>("PlanID")
-                        .HasColumnType("int");
+                    b.Property<long?>("PlanID")
+                        .HasColumnType("bigint");
 
                     b.Property<byte?>("PoreScore")
                         .HasColumnType("tinyint");
@@ -523,8 +526,8 @@ namespace Persistence.Migrations
                     b.Property<byte?>("SensitivityScore")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<long>("UserID")
+                        .HasColumnType("bigint");
 
                     b.Property<byte?>("WrinkleScore")
                         .HasColumnType("tinyint");
@@ -540,11 +543,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.SkinZone", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -557,11 +560,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.SubscriptionPlan", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("BillingCycle")
                         .HasColumnType("int");
@@ -594,14 +597,14 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
+                    b.Property<long>("AccountId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -612,11 +615,14 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId")
+                        .IsUnique();
+
+                    b.HasIndex("Phone")
                         .IsUnique();
 
                     b.ToTable("Users");
@@ -624,17 +630,17 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.UserSubscription", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PlanID")
-                        .HasColumnType("int");
+                    b.Property<long>("PlanID")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -643,8 +649,8 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<long>("UserID")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

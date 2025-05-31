@@ -184,6 +184,7 @@ namespace Persistence.DatabaseConfig
                 entity.HasMany(e => e.UserSubscriptions)
                     .WithOne(e => e.User)
                     .HasForeignKey(e => e.UserID);
+                entity.HasIndex(e => e.Phone).IsUnique(true);
             });
             modelBuilder.Entity<Consultation>()
         .Property(p => p.PricePaid)

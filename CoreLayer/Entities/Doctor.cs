@@ -8,8 +8,8 @@ namespace Domain.Entities
 {
     public class Doctor
     {
-        public int Id { get; set; }
-        public int AccountId { get; set; }
+        public long Id { get; set; }
+        public long AccountId { get; set; }
         public string FullName { get; set; }
         public string LicenseNo { get; set; }
         public string Specialty { get; set; }

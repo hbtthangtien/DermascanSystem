@@ -1,7 +1,8 @@
 ﻿using Application.Interfaces.IRepositories;
-using Application.IUnitOfWork;
+using Application.IUnitOfWorks;
 using Microsoft.EntityFrameworkCore.Storage;
 using Persistence.DatabaseConfig;
+using Persistence.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace Persistence.UnitOfWorks
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DermascanContext _context;
+
+        private readonly Dictionary<Type, object> _repositories = new();
+
         public IAccountRepository Accounts { get; private set; }
 
         public IAIRecommendationRepository AIRecommendations { get; private set; }
@@ -146,9 +150,28 @@ namespace Persistence.UnitOfWorks
                 }
             }
         }
-        public void Dispose()
+        public async void Dispose()
         {
-            _context.Dispose();
+            await _context.DisposeAsync();
+        }
+
+        public IBaseRepository<T> GetRepository<T>() where T : class
+        {
+            var type = typeof(T);
+            if (!_repositories.ContainsKey(type))
+            {
+                var repoInstance = Activator.CreateInstance(typeof(BaseRepository<T>), _context);
+                if (repoInstance == null)
+                    throw new InvalidOperationException($"Could not create repository for type {type.Name}");
+                _repositories[type] = repoInstance;
+            }
+            return (IBaseRepository<T>)_repositories[type];
+        }
+
+        public async Task SaveChangeAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
+    
 }

@@ -1,15 +1,10 @@
-﻿using CoreLayer.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.Commons;
+using Domain.Enums;
 
 namespace Domain.Entities
 {
-    public class SubscriptionPlan
+    public class SubscriptionPlan : BaseEntity
     {
-        public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
@@ -17,7 +12,6 @@ namespace Domain.Entities
         public int GracePeriodDays { get; set; }
         public int ResultRetentionDays { get; set; }
         public int FreeUsageLimitPerWeek { get; set; }
-
         public ICollection<SkinAnalysis> SkinAnalyses { get; set; } = new List<SkinAnalysis>();
         public ICollection<UserSubscription> UserSubscriptions { get; set; } = new List<UserSubscription>();    
     }

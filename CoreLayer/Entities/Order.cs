@@ -1,4 +1,5 @@
-﻿using CoreLayer.Enums;
+﻿using Domain.Commons;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Order
+    public class Order : BaseEntity
     {
-        public long Id { get; set; }
         public long UserID { get; set; }
         public long ProductID { get; set; }
         public long? AnalysisID { get; set; }
@@ -18,8 +18,7 @@ namespace Domain.Entities
         public decimal UnitPrice { get; set; }
         public decimal CommissionEarned { get; set; }
         public OrderStatus OrderStatus { get; set; }
-        public DateTime OrderedAt { get; set; }
-
+        public DateTime OrderedAt { get; set; } = DateTime.Now;
         public User? User { get; set; }
         public Product? Product { get; set; }
         public SkinAnalysis? Analysis { get; set; }

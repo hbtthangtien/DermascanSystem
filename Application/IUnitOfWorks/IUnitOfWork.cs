@@ -40,6 +40,7 @@ namespace Application.IUnitOfWorks
 
         public IUserSubsciptionRepository UserSubsciptions { get; }
 
+        public IAccountTokenRepository AccountTokens { get; }
         IBaseRepository<T> GetRepository<T>() where T : class;
         public Task BeginTransactionAsync();
         public Task CommitTransactionAsync();

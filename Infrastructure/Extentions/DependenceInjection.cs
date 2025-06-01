@@ -2,6 +2,7 @@
 using Application.Services;
 using Domain.Configs;
 using Infrastructure.ExternalServices;
+using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ namespace Infrastructure.Extentions
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IValidService, ValidService>();
             services.AddScoped<IJwtService, JwtService>();
+            services.AddHttpContextAccessor();
         }
         public static void AddAuthenticationByJwt(this IServiceCollection services, IConfiguration configuration)
         {
@@ -72,7 +74,10 @@ namespace Infrastructure.Extentions
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
         }
-
+        public static void AddMapperToProject(this IServiceCollection services)
+        {
+            services.AddMapster();
+        }
     }
 
 }

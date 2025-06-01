@@ -53,6 +53,8 @@ namespace Persistence.UnitOfWorks
 
         public IUserSubsciptionRepository UserSubsciptions { get; private set; }
 
+        public IAccountTokenRepository AccountTokens {  get; private set; }
+
         public UnitOfWork(DermascanContext context,
             IAccountRepository accounts,
             IAIRecommendationRepository aIRecommendations,
@@ -71,7 +73,8 @@ namespace Persistence.UnitOfWorks
             ISkinZoneRepository skinZones,
             ISubsciptionPlanRepository subscriptions,
             IUserRepository users,
-            IUserSubsciptionRepository userSubsciptions)
+            IUserSubsciptionRepository userSubsciptions,
+            IAccountTokenRepository accountTokens)
         {
             _context = context;
             Accounts = accounts;
@@ -92,6 +95,7 @@ namespace Persistence.UnitOfWorks
             Subscriptions = subscriptions;
             Users = users;
             UserSubsciptions = userSubsciptions;
+            AccountTokens = accountTokens;
         }
 
         private IDbContextTransaction? _currentTransaction;

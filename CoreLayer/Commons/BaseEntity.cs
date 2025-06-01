@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Commons
 {
-    public class BaseEntity
+    public abstract class BaseEntity : IAuditable
     {
         public long Id { get; set; }
 

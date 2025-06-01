@@ -45,6 +45,7 @@ namespace Persistence.DatabaseExtentions
             services.AddScoped<ISubsciptionPlanRepository, SubsciptionPlanRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserSubsciptionRepository, UserSubsciptionRepository>();
+            services.AddScoped<IAccountTokenRepository, AccountTokenRepository>();
 
             // Register UnitOfWork
             services.AddScoped<IUnitOfWork,UnitOfWork>();

@@ -35,7 +35,11 @@ namespace Persistence.Repositories
             return _dbSet.AsQueryable();
         }
 
-        
+        public IQueryable<T> GetInstance()
+        {
+            return _dbSet.AsQueryable();
+        }
+
         public async Task<T?> GetSingle(Expression<Func<T, bool>> expression)
         {
             return await _dbSet.FirstOrDefaultAsync(expression);

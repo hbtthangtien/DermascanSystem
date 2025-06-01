@@ -1,10 +1,14 @@
 ﻿using Application.DTOs.Common;
 using Application.DTOs.Token;
+using Application.Extentions;
 using Application.Interfaces.IServices;
 using Application.IUnitOfWorks;
 using Application.Services;
 using Domain.Configs;
 using Domain.Entities;
+using Domain.ExceptionCustom;
+using Mapster;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -33,6 +37,7 @@ namespace Infrastructure.ExternalServices
                 new Claim(ClaimTypes.NameIdentifier, dto.Id.ToString()),
                 new Claim(ClaimTypes.Email, dto.Email),
                 new Claim("Fullname",dto.FullName),
+                new Claim(ClaimTypes.Role,dto.Role.ToString())
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Token));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -54,9 +59,43 @@ namespace Infrastructure.ExternalServices
             return BaseResponse<TokenResponseDTO>.SuccessResponse(data);
         }
 
-        public Task<BaseResponse<TokenResponseDTO>> RefreshToken(RefreshTokenRequestDTO dto)
+        public async Task<BaseResponse<TokenResponseDTO>> RefreshToken(RefreshTokenRequestDTO dto)
         {
-            throw new NotImplementedException();
+            await CheckValidRefreshToken(dto.RefreshToken);
+            var refreshToken = await _unitOfWork.AccountTokens.GetInstance().Where(e => e.Token == dto.RefreshToken).FirstOrDefaultAsync();
+            var account = await _unitOfWork.Accounts.GetInstance()
+                       .Include(e => e.Doctor)
+                       .Include(e => e.User)
+                       .Where(e => e.Id == refreshToken!.AccountId)
+                       .FirstOrDefaultAsync();
+            var claimToken = account.Adapt<ClaimToken>();
+            claimToken.FullName = account.User != null ? account.User.FullName : (account.Doctor != null ? account.Doctor.FullName : "");
+            var token = await GenerateTokenAsync(claimToken!);
+            refreshToken!.MarkUpdated(account.Email);
+            await _unitOfWork.SaveChangeAsync();
+            return token;
+
+        }
+
+        private async Task CheckValidRefreshToken(string refreshToken)
+        {
+            var token = await _unitOfWork.AccountTokens.GetInstance()
+                .Where(e => e.Token == refreshToken)
+                .Select(e => new AccountToken
+                {
+                    ExpiryTime = e.ExpiryTime,
+                    Token = e.Token,
+                    DeletedAt = e.DeletedAt,
+                    UpdatedAt = e.UpdatedAt
+                }).FirstOrDefaultAsync()
+                ?? throw  ExceptionFactory.NotFound("Token",refreshToken);
+            // check expired date
+            _ = (token.ExpiryTime <= DateTime.Now) ? throw ExceptionFactory.Business("Token is expired date to use!!!") : token;
+            // check refresh token is used
+            _ = (token.UpdatedAt != null) ? throw  ExceptionFactory.Business($"Token is used at {token.UpdatedAt}") : token;
+            // check refresh token is revoked
+            _ = (token.DeletedAt != null) ? throw ExceptionFactory.Business($"Token is revoked at {token.DeletedAt}") : token;
+            //
         }
 
         public Task<IdResponse> RevokeToken(RevokeTokenDTO dto)
@@ -64,7 +103,7 @@ namespace Infrastructure.ExternalServices
             throw new NotImplementedException();
         }
 
-        private async Task<string> GenerateRefreshToken(long userId, int expireDay)
+        private async Task<string> GenerateRefreshToken(long accountId, int expireDay)
         {
             var random = new byte[128];
 
@@ -72,7 +111,14 @@ namespace Infrastructure.ExternalServices
             {
                 rng.GetBytes(random);
                 string token = Convert.ToBase64String(random);
-                
+                var refreshToken = new AccountToken
+                {
+                    Token = token,
+                    ExpiryTime = DateTime.Now.AddDays(expireDay),
+                    AccountId = accountId,
+                };
+                await _unitOfWork.AccountTokens.AddAsync(refreshToken);
+                await _unitOfWork.SaveChangeAsync();
                 return token;
             }
         }

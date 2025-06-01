@@ -1,4 +1,6 @@
-﻿using Application.DTOs.Common;
+﻿using Application.DTOs.Authenticate;
+using Application.DTOs.Common;
+using Application.DTOs.Token;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,6 @@ namespace Application.Interfaces.IServices
 {
     public interface IAuthenticateService
     {
-        
+        Task<BaseResponse<TokenResponseDTO>> Login(LoginDTO dto);
     }
 }

@@ -1,4 +1,3 @@
-
 using Infrastructure.Extentions;
 using Persistence.DatabaseExtentions;
 using Presentation.Middleware;
@@ -24,6 +23,7 @@ namespace Presentation
             builder.Services.AddAuthenticationByJwt(builder.Configuration);
             builder.Services.InitialValueConfig(builder.Configuration);
             builder.Services.SetCorsForAPI();
+            builder.Services.AddMapperToProject();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

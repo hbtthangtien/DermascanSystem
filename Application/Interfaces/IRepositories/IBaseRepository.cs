@@ -10,6 +10,7 @@ namespace Application.Interfaces.IRepositories
     public interface IBaseRepository<T> where T : class
     {
         public IQueryable<T> GetAllAsync();
+        public IQueryable<T> GetInstance();
         public Task<T?> GetSingle(Expression<Func<T, bool>> expression);
         public Task AddAsync(T entity);
         public void UpdateAsync(T entity);

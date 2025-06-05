@@ -1,5 +1,7 @@
-﻿using Domain.Entities;
+﻿using Domain.Commons;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Persistence.DatabaseExtentions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +54,8 @@ namespace Persistence.DatabaseConfig
         public virtual DbSet<UserSubscription> UsersSubscriptions { get; set; }
 
         public virtual DbSet<AccountToken> AccountTokens { get; set; }
+
+        
 
         #endregion
 
@@ -194,8 +198,8 @@ namespace Persistence.DatabaseConfig
                 entity.HasIndex(e => e.Phone).IsUnique(true);
             });
             modelBuilder.Entity<Consultation>()
-        .Property(p => p.PricePaid)
-        .HasPrecision(18, 4); // 18 là tổng số chữ số, 4 là số chữ số sau dấu phẩy
+                .Property(p => p.PricePaid)
+                .HasPrecision(18, 4); // 18 là tổng số chữ số, 4 là số chữ số sau dấu phẩy
 
             // Các property khác
             modelBuilder.Entity<DiaryEntry>()
@@ -229,7 +233,40 @@ namespace Persistence.DatabaseConfig
             modelBuilder.Entity<SubscriptionPlan>()
                 .Property(p => p.Price)
                 .HasPrecision(18, 4);
+            SkinZoneSeedingData.Seeding(modelBuilder);
+            SubscriptionSeedingData.Seeding(modelBuilder);
         }
+
+
+        #region custom function entityframe work core
+
+        public override int SaveChanges()
+        {
+            HandleSoftDelete();
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            HandleSoftDelete();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+
+        private void HandleSoftDelete()
+        {
+            foreach (var entry in ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Deleted && e.Entity is BaseEntity))
+            {
+                entry.State = EntityState.Modified;
+                var entity = (BaseEntity)entry.Entity;
+                entity.DeletedAt = DateTime.UtcNow;
+            }
+        }
+
+
+        #endregion
+
 
     }
 }

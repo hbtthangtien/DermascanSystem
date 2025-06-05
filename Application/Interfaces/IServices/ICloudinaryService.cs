@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Enums
+namespace Application.Interfaces.IServices
 {
-    public enum BillingCycle
+    public interface ICloudinaryService
     {
-        OneTime,
-        Monthly,
-        Quarterly
     }
 }

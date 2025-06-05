@@ -20,6 +20,7 @@ namespace Infrastructure.Extentions
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IValidService, ValidService>();
             services.AddScoped<IJwtService, JwtService>();
+            services.AddSingleton<ICloudinaryService, CloudinaryService>();
             services.AddHttpContextAccessor();
         }
         public static void AddAuthenticationByJwt(this IServiceCollection services, IConfiguration configuration)
@@ -49,7 +50,13 @@ namespace Infrastructure.Extentions
         public static void InitialValueConfig(this IServiceCollection services, IConfiguration configuration)
         {
             var jwtConfig = configuration.GetSection("JwtConfig");
+            var apiGemini = configuration.GetSection("GeminiApi");
+            var cloudinaryConfig = configuration.GetSection("Cloudinary");
+            var roboflowConfig = configuration.GetSection("Roboflow");
             services.Configure<JwtConfigs>(jwtConfig);
+            services.Configure<GeminiApi>(apiGemini);
+            services.Configure<CloundinaryConfig>(cloudinaryConfig);
+            services.Configure<RoboflowConfig>(roboflowConfig);
         }
         public static void SetCorsForAPI(this IServiceCollection services)
         {

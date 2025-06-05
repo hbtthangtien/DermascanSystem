@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Enums
+namespace Application.DTOs.Roboflow
 {
-    public enum BillingCycle
+    public class RoboflowRequest
     {
-        OneTime,
-        Monthly,
-        Quarterly
+        
     }
 }

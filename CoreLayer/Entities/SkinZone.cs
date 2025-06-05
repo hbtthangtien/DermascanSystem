@@ -11,5 +11,6 @@ namespace Domain.Entities
     {
         public string Name { get; set; }
         public ICollection<AnalysisZoneScore> AnalysisZoneScores { get; set; } = new List<AnalysisZoneScore>();
+        public string Description { get; set; }
     }
 }

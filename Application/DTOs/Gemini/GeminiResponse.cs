@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces.IServices
+namespace Application.DTOs.Gemini
 {
-    public interface IAIAnalysisService
+    public class GeminiResponse
     {
-        public Task ScanFaceAnalysic();
+        public List<Candidate> candidates { get; set; }
     }
+
 }

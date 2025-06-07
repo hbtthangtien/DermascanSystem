@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Application.DTOs.SkinAnalysic;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.IServices
 {
-    public interface ICloudinaryService
+    public interface IGenemiService
     {
-        public Task<string> UploadImageFileAsync(IFormFile file);
+        public Task<SkinAnalysisDto> FakingDataFromApi();
     }
 }

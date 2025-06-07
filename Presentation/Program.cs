@@ -11,7 +11,6 @@ namespace Presentation
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers()
                             .AddCustomJsonOptions();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -24,6 +23,7 @@ namespace Presentation
             builder.Services.InitialValueConfig(builder.Configuration);
             builder.Services.SetCorsForAPI();
             builder.Services.AddMapperToProject();
+            builder.Services.ConfigureHttpClient(builder.Configuration);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

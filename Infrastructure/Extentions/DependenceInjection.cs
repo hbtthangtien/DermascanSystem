@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.IServices;
 using Application.Services;
 using Domain.Configs;
+using Domain.Constant;
 using Infrastructure.ExternalServices;
 using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -21,6 +22,11 @@ namespace Infrastructure.Extentions
             services.AddScoped<IValidService, ValidService>();
             services.AddScoped<IJwtService, JwtService>();
             services.AddSingleton<ICloudinaryService, CloudinaryService>();
+            services.AddScoped<IGenemiService,GeminiAIService>();
+            services.AddScoped<IAnalysisService,AnalysisService>();
+            services.AddScoped<IRoboflowService, RoboflowService>();
+            services.AddScoped<IUserContextService, UserContextService>();
+            services.AddScoped<IPlanGuardService, PlanGuardService>();
             services.AddHttpContextAccessor();
         }
         public static void AddAuthenticationByJwt(this IServiceCollection services, IConfiguration configuration)
@@ -84,6 +90,36 @@ namespace Infrastructure.Extentions
         public static void AddMapperToProject(this IServiceCollection services)
         {
             services.AddMapster();
+        }
+
+        public static void ConfigureHttpClient(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddHttpClient("Roboflow",client =>
+            {
+                var roboflowConfig = configuration.GetSection("Roboflow").Get<RoboflowConfig>();
+                var endpoint = roboflowConfig!.EndPoint
+                                   .Replace("{project_name}", roboflowConfig.ProjectName)
+                                   .Replace("{version}", roboflowConfig.Version)
+                                   .Replace("{api_key}", roboflowConfig.ApiKey);
+                client.BaseAddress = new Uri(endpoint);
+                client.Timeout = TimeSpan.FromSeconds(30);
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+                client.BaseAddress = new Uri(endpoint);
+                client.Timeout = TimeSpan.FromSeconds(30);
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
+
+            services.AddHttpClient("Gemini", client =>
+            {
+                var geminiConfig = configuration.GetSection("GeminiApi").Get<GeminiApi>();
+                var endpoint = geminiConfig!.BaseUrl + ApiModel.MODEL_FLASH_PREVIEW + "?key=" +geminiConfig.ApiKey;
+                client.BaseAddress = new Uri(endpoint);
+                client.Timeout = TimeSpan.FromSeconds(30);
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+                client.BaseAddress = new Uri(endpoint);
+                client.Timeout = TimeSpan.FromSeconds(30);
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
         }
     }
 

@@ -31,7 +31,7 @@ namespace Presentation.Controllers
             return Ok(data);
         }
 
-        [HttpDelete]
+        [HttpDelete("revoke-token")]
         public async Task<IActionResult> RevokeTokenAsync(RevokeTokenDTO request)
         {
             var data = await _jwtService.RevokeToken(request);

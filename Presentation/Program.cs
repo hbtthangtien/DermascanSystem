@@ -1,5 +1,6 @@
 using Infrastructure.Extentions;
 using Persistence.DatabaseExtentions;
+using Presentation.BackgroundServices;
 using Presentation.Middleware;
 
 namespace Presentation
@@ -24,6 +25,7 @@ namespace Presentation
             builder.Services.SetCorsForAPI();
             builder.Services.AddMapperToProject();
             builder.Services.ConfigureHttpClient(builder.Configuration);
+            builder.Services.AddHostedService<AutoDeleteRefreshTokenBackgroundService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

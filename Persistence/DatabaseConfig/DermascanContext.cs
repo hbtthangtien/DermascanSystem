@@ -91,9 +91,11 @@ namespace Persistence.DatabaseConfig
 
             modelBuilder.Entity<AnalysisZoneScore>(entity =>
             {
+                
+
                 entity.HasOne(e => e.SkinAnalysis)
                       .WithMany(e => e.AnalysisZoneScores)
-                      .HasForeignKey(e => e.Id);
+                      .HasForeignKey(e => e.SkinAnalysisId);
 
                 entity.HasOne(e => e.Zone)
                       .WithMany(e => e.AnalysisZoneScores)
@@ -189,6 +191,7 @@ namespace Persistence.DatabaseConfig
                       .HasForeignKey(e => e.PlanID);
 
             });
+
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasMany(e => e.UserSubscriptions)

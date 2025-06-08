@@ -27,6 +27,7 @@ namespace Infrastructure.Extentions
             services.AddScoped<IRoboflowService, RoboflowService>();
             services.AddScoped<IUserContextService, UserContextService>();
             services.AddScoped<IPlanGuardService, PlanGuardService>();
+            services.AddScoped<ISubscriptionPlanService, SubscriptionPlanService>();
             services.AddHttpContextAccessor();
         }
         public static void AddAuthenticationByJwt(this IServiceCollection services, IConfiguration configuration)

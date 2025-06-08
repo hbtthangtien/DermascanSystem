@@ -21,7 +21,7 @@ namespace Domain.Entities
         public byte? PoreScore { get; set; }
         public byte? SensitivityScore { get; set; }
         public byte? AgingScore { get; set; }
-        public string ResultJSON { get; set; }
+        public string? ResultJSON { get; set; }
         public DateTime? ExpiresAt { get; set; }
         public User? User { get; set; }
         public SubscriptionPlan? Plan { get; set; }

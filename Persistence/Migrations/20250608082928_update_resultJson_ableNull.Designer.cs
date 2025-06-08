@@ -12,8 +12,8 @@ using Persistence.DatabaseConfig;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DermascanContext))]
-    [Migration("20250531104657_update_index")]
-    partial class update_index
+    [Migration("20250608082928_update_resultJson_ableNull")]
+    partial class update_resultJson_ableNull
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,6 +63,12 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -74,6 +80,12 @@ namespace Persistence.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
@@ -82,20 +94,77 @@ namespace Persistence.Migrations
                     b.ToTable("Accounts");
                 });
 
+            modelBuilder.Entity("Domain.Entities.AccountToken", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("AccountTokens");
+                });
+
             modelBuilder.Entity("Domain.Entities.AnalysisZoneScore", b =>
                 {
                     b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<byte>("Score")
                         .HasColumnType("tinyint");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("ZoneID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("skinAnalysisId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ZoneID");
+
+                    b.HasIndex("skinAnalysisId");
 
                     b.ToTable("AnalysisZones");
                 });
@@ -108,8 +177,14 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CurrentWeek")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -122,6 +197,12 @@ namespace Persistence.Migrations
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("UserID")
                         .HasColumnType("bigint");
@@ -144,6 +225,12 @@ namespace Persistence.Migrations
                     b.Property<int?>("ActualDuration")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<long>("DoctorID")
                         .HasColumnType("bigint");
 
@@ -165,6 +252,12 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("UserID")
@@ -191,6 +284,12 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("EntryDate")
                         .HasColumnType("datetime2");
 
@@ -205,6 +304,12 @@ namespace Persistence.Migrations
                     b.Property<decimal?>("SleepHours")
                         .HasPrecision(5, 2)
                         .HasColumnType("decimal(5,2)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("UserID")
                         .HasColumnType("bigint");
@@ -231,6 +336,12 @@ namespace Persistence.Migrations
                     b.Property<long>("AccountId")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -249,6 +360,12 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Specialty")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -274,6 +391,12 @@ namespace Persistence.Migrations
                     b.Property<long?>("AnalysisID")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("DoctorEscalated")
                         .HasColumnType("bit");
 
@@ -282,6 +405,12 @@ namespace Persistence.Migrations
 
                     b.Property<string>("SymptomsText")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("UserID")
@@ -308,6 +437,12 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("NotifType")
                         .HasColumnType("int");
 
@@ -319,6 +454,12 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("UserID")
@@ -346,6 +487,12 @@ namespace Persistence.Migrations
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("OrderStatus")
                         .HasColumnType("int");
 
@@ -364,6 +511,12 @@ namespace Persistence.Migrations
                     b.Property<decimal>("UnitPrice")
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("UserID")
                         .HasColumnType("bigint");
@@ -393,12 +546,24 @@ namespace Persistence.Migrations
                         .HasPrecision(5, 2)
                         .HasColumnType("decimal(5,2)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PartnerType")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -425,6 +590,12 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ImageURL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -442,6 +613,12 @@ namespace Persistence.Migrations
                     b.Property<decimal?>("Price")
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -461,12 +638,24 @@ namespace Persistence.Migrations
                     b.Property<long?>("AnalysisID")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("TakenAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("UserID")
                         .HasColumnType("bigint");
@@ -497,6 +686,12 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CapturedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("ExpiresAt")
                         .HasColumnType("datetime2");
 
@@ -520,11 +715,16 @@ namespace Persistence.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<string>("ResultJSON")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte?>("SensitivityScore")
                         .HasColumnType("tinyint");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("UserID")
                         .HasColumnType("bigint");
@@ -549,13 +749,87 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("SkinZones");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6634),
+                            Name = "Trán"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6653),
+                            Name = "Má trái"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6654),
+                            Name = "Má phải"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6656),
+                            Name = "Cằm"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6657),
+                            Name = "Mũi"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6672),
+                            Name = "Vùng mắt"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6674),
+                            Name = "Cổ"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6675),
+                            Name = "Xương hàm"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6676),
+                            Name = "Môi trên"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6678),
+                            Name = "Toàn bộ mặt"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.SubscriptionPlan", b =>
@@ -568,6 +842,12 @@ namespace Persistence.Migrations
 
                     b.Property<int>("BillingCycle")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -590,9 +870,65 @@ namespace Persistence.Migrations
                     b.Property<int>("ResultRetentionDays")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("SubscriptionPlans");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            BillingCycle = 0,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6744),
+                            Description = "Dùng thử phân tích da mặt trong 3 ngày, không lưu trữ kết quả, có quảng cáo.",
+                            FreeUsageLimitPerWeek = 1,
+                            GracePeriodDays = 0,
+                            Name = "Gói miễn phí",
+                            Price = 0m,
+                            ResultRetentionDays = 0
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            BillingCycle = 0,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6751),
+                            Description = "Dùng thử 15 ngày, không lưu kết quả, có quảng cáo, kèm món quà nhỏ tri ân khách hàng.",
+                            FreeUsageLimitPerWeek = 2,
+                            GracePeriodDays = 0,
+                            Name = "Gói cơ bản",
+                            Price = 19000m,
+                            ResultRetentionDays = 0
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            BillingCycle = 1,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6756),
+                            Description = "Phân tích da mặt trong 1 tháng, có lưu kết quả, bỏ quảng cáo, giảm giá 10% cho khách hàng lần đầu.",
+                            FreeUsageLimitPerWeek = 5,
+                            GracePeriodDays = 3,
+                            Name = "Gói Premium",
+                            Price = 59000m,
+                            ResultRetentionDays = 30
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            BillingCycle = 2,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6760),
+                            Description = "Phân tích da mặt trong 3 tháng, có lưu kết quả, nhắc nhở điểm danh, bỏ quảng cáo, giảm giá 15%, tặng quà (nước tẩy trang/sữa rửa mặt).",
+                            FreeUsageLimitPerWeek = 7,
+                            GracePeriodDays = 5,
+                            Name = "Gói Pro",
+                            Price = 299000m,
+                            ResultRetentionDays = 90
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -606,7 +942,10 @@ namespace Persistence.Migrations
                     b.Property<long>("AccountId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FullName")
@@ -616,6 +955,12 @@ namespace Persistence.Migrations
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -636,6 +981,12 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -645,8 +996,13 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("UserID")
@@ -678,17 +1034,28 @@ namespace Persistence.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Domain.Entities.AnalysisZoneScore", b =>
+            modelBuilder.Entity("Domain.Entities.AccountToken", b =>
                 {
-                    b.HasOne("Domain.Entities.SkinAnalysis", "SkinAnalysis")
-                        .WithMany("AnalysisZoneScores")
-                        .HasForeignKey("Id")
+                    b.HasOne("Domain.Entities.Account", "Account")
+                        .WithMany("Tokens")
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AnalysisZoneScore", b =>
+                {
                     b.HasOne("Domain.Entities.SkinZone", "Zone")
                         .WithMany("AnalysisZoneScores")
                         .HasForeignKey("ZoneID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.SkinAnalysis", "SkinAnalysis")
+                        .WithMany("AnalysisZoneScores")
+                        .HasForeignKey("skinAnalysisId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -886,6 +1253,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Account", b =>
                 {
                     b.Navigation("Doctor");
+
+                    b.Navigation("Tokens");
 
                     b.Navigation("User");
                 });

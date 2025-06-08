@@ -1,4 +1,5 @@
 ﻿using Domain.Commons;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Domain.Entities
         public long PlanID { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public string Status { get; set; }
+        public UserPlanStatus Status { get; set; }
         public User User { get; set; }
         public SubscriptionPlan Plan { get; set; }
     }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Enums
 {
-    public enum RecommendationType
+    public enum UserPlanCodeException
     {
-        None = 0,
-        Product,
-        Advice
+        PlanExpiredOrNotOwned,
+        WeeklyQuotaExceeded,
+        Other
     }
 }

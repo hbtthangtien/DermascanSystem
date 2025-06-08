@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace Domain.Enums
 {
-    public enum RecommendationType
+    public enum UserPlanStatus
     {
-        None = 0,
-        Product,
-        Advice
+        Active,
+        Pending,
+        Expired,
+        Canceled,
+        Trial,
+        Failed
     }
 }

@@ -12,5 +12,7 @@ namespace Application.Interfaces.IServices
     public interface IAnalysisService
     {
         public Task<BaseResponse<ResponseAnalysicDTO>> ScanFaceAnalysic(IFormFile file);
+
+        public Task<IdResponse> CreateAnalysicStatistic(CreateAnalysicDTO dto);
     }
 }

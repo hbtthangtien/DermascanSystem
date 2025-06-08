@@ -8,6 +8,6 @@ namespace Application.Interfaces.IServices
 {
     public interface IPlanGuardService
     {
-        Task ValidateAsync(long userId);
+        Task ValidateAsync();
     }
 }

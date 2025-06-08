@@ -16,7 +16,8 @@ namespace Infrastructure.ExternalServices
         {
             _httpContextAccessor = httpContextAccessor;
         }
-        public string GetUserId()
+
+        public long GetAccountId()
         {
             var user = _httpContextAccessor.HttpContext?.User;
             if (user != null)
@@ -25,10 +26,42 @@ namespace Infrastructure.ExternalServices
 
                 if (userIdClaim != null)
                 {
-                    return userIdClaim.Value;
+                    return long.Parse(userIdClaim.Value);
                 }
             }
-            return null;
+            return 0;
+        }
+
+        public long GetPlanId()
+        {
+            var user = _httpContextAccessor.HttpContext?.User;
+            if (user != null)
+            {
+                var plainId = _httpContextAccessor.HttpContext?.User.FindFirstValue("PlanId");
+                if(plainId != null)
+                {
+                    return long.Parse(plainId); 
+                }
+
+                
+            }
+            return 0;
+        }
+
+        public long GetUserId()
+        {
+            var user = _httpContextAccessor.HttpContext?.User;
+            if (user != null)
+            {
+                var plainId = _httpContextAccessor.HttpContext?.User.FindFirstValue("UserId");
+                if (plainId != null)
+                {
+                    return long.Parse(plainId);
+                }
+
+
+            }
+            return 0;
         }
     }
 }

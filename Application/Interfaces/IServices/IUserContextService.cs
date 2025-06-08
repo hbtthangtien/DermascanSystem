@@ -8,6 +8,10 @@ namespace Application.Interfaces.IServices
 {
     public interface IUserContextService
     {
-        public string GetUserId();
+        public long GetUserId();
+
+        public long GetPlanId();
+
+        public long GetAccountId();
     }
 }

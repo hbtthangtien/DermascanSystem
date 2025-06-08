@@ -29,10 +29,18 @@ namespace Application.Services
             {
                 var account = dto.Adapt<Account>();
                 var user = dto.Adapt<User>();
+                var userPlan = new UserSubscription
+                {
+                    PlanID = 1,
+                    StartDate = DateTime.Now,
+                    Status = Domain.Enums.UserPlanStatus.Active,
+                };
                 account.HashPassword = BCrypt.Net.BCrypt.HashPassword(dto.HashPassword);
                 account.Role = Domain.Enums.UserRole.USER;
                 await _unitOfWork.Accounts.AddAsync(account);
+                await _unitOfWork.UserSubsciptions.AddAsync(userPlan);
                 user.Account = account;
+                user.UserSubscriptions.Add(userPlan);
                 await _unitOfWork.Users.AddAsync(user);
                 await _unitOfWork.SaveChangeAsync();
                 return IdResponse.SuccessResponse(account.Id, "Create Successfully!!!");

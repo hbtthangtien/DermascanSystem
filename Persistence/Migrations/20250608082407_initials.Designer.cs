@@ -12,8 +12,8 @@ using Persistence.DatabaseConfig;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DermascanContext))]
-    [Migration("20250531170022_add_UserToken_table1")]
-    partial class add_UserToken_table1
+    [Migration("20250608082407_initials")]
+    partial class initials
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -134,7 +134,10 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.AnalysisZoneScore", b =>
                 {
                     b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -154,9 +157,14 @@ namespace Persistence.Migrations
                     b.Property<long>("ZoneID")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("skinAnalysisId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ZoneID");
+
+                    b.HasIndex("skinAnalysisId");
 
                     b.ToTable("AnalysisZones");
                 });
@@ -761,6 +769,68 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SkinZones");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9849),
+                            Name = "Trán"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9869),
+                            Name = "Má trái"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9871),
+                            Name = "Má phải"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9873),
+                            Name = "Cằm"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9874),
+                            Name = "Mũi"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9878),
+                            Name = "Vùng mắt"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9880),
+                            Name = "Cổ"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9881),
+                            Name = "Xương hàm"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9883),
+                            Name = "Môi trên"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9886),
+                            Name = "Toàn bộ mặt"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.SubscriptionPlan", b =>
@@ -810,6 +880,56 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SubscriptionPlans");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            BillingCycle = 0,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9955),
+                            Description = "Dùng thử phân tích da mặt trong 3 ngày, không lưu trữ kết quả, có quảng cáo.",
+                            FreeUsageLimitPerWeek = 1,
+                            GracePeriodDays = 0,
+                            Name = "Gói miễn phí",
+                            Price = 0m,
+                            ResultRetentionDays = 0
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            BillingCycle = 0,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9962),
+                            Description = "Dùng thử 15 ngày, không lưu kết quả, có quảng cáo, kèm món quà nhỏ tri ân khách hàng.",
+                            FreeUsageLimitPerWeek = 2,
+                            GracePeriodDays = 0,
+                            Name = "Gói cơ bản",
+                            Price = 19000m,
+                            ResultRetentionDays = 0
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            BillingCycle = 1,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9968),
+                            Description = "Phân tích da mặt trong 1 tháng, có lưu kết quả, bỏ quảng cáo, giảm giá 10% cho khách hàng lần đầu.",
+                            FreeUsageLimitPerWeek = 5,
+                            GracePeriodDays = 3,
+                            Name = "Gói Premium",
+                            Price = 59000m,
+                            ResultRetentionDays = 30
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            BillingCycle = 2,
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9970),
+                            Description = "Phân tích da mặt trong 3 tháng, có lưu kết quả, nhắc nhở điểm danh, bỏ quảng cáo, giảm giá 15%, tặng quà (nước tẩy trang/sữa rửa mặt).",
+                            FreeUsageLimitPerWeek = 7,
+                            GracePeriodDays = 5,
+                            Name = "Gói Pro",
+                            Price = 299000m,
+                            ResultRetentionDays = 90
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -877,9 +997,8 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -929,15 +1048,15 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.AnalysisZoneScore", b =>
                 {
-                    b.HasOne("Domain.Entities.SkinAnalysis", "SkinAnalysis")
-                        .WithMany("AnalysisZoneScores")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.SkinZone", "Zone")
                         .WithMany("AnalysisZoneScores")
                         .HasForeignKey("ZoneID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.SkinAnalysis", "SkinAnalysis")
+                        .WithMany("AnalysisZoneScores")
+                        .HasForeignKey("skinAnalysisId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

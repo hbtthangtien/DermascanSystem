@@ -11,7 +11,7 @@ namespace Domain.Entities
     {
         public long ZoneID { get; set; }
         public byte Score { get; set; }
-
+        public long SkinAnalysisId { get; set; }
         public SkinAnalysis? SkinAnalysis { get; set; }
         public SkinZone? Zone { get; set; }
     }

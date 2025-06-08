@@ -37,7 +37,9 @@ namespace Infrastructure.ExternalServices
                 new Claim(ClaimTypes.NameIdentifier, dto.Id.ToString()),
                 new Claim(ClaimTypes.Email, dto.Email),
                 new Claim("Fullname",dto.FullName),
-                new Claim(ClaimTypes.Role,dto.Role.ToString())
+                new Claim(ClaimTypes.Role,dto.Role.ToString()),
+                new Claim("PlanId",dto.PlanID.ToString()),
+                new Claim("UserId",dto.UserId.ToString())
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Token));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -66,10 +68,13 @@ namespace Infrastructure.ExternalServices
             var account = await _unitOfWork.Accounts.GetInstance()
                        .Include(e => e.Doctor)
                        .Include(e => e.User)
+                       .ThenInclude(e => e.UserSubscriptions
+                                .Where(us => us.Status == Domain.Enums.UserPlanStatus.Active && us.DeletedAt == null))
                        .Where(e => e.Id == refreshToken!.AccountId)
                        .FirstOrDefaultAsync();
             var claimToken = account.Adapt<ClaimToken>();
             claimToken.FullName = account.User != null ? account.User.FullName : (account.Doctor != null ? account.Doctor.FullName : "");
+            claimToken.PlanID = account.User!.UserSubscriptions.ElementAt(0).PlanID;
             var token = await GenerateTokenAsync(claimToken!);
             refreshToken!.MarkUpdated(account.Email);
             await _unitOfWork.SaveChangeAsync();

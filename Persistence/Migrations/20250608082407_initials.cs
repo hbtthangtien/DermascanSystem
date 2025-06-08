@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
@@ -19,7 +21,11 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     HashPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false)
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -34,7 +40,11 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PartnerType = table.Column<int>(type: "int", nullable: false),
-                    CommissionRate = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false)
+                    CommissionRate = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -47,7 +57,11 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,11 +80,40 @@ namespace Persistence.Migrations
                     BillingCycle = table.Column<int>(type: "int", nullable: false),
                     GracePeriodDays = table.Column<int>(type: "int", nullable: false),
                     ResultRetentionDays = table.Column<int>(type: "int", nullable: false),
-                    FreeUsageLimitPerWeek = table.Column<int>(type: "int", nullable: false)
+                    FreeUsageLimitPerWeek = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SubscriptionPlans", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AccountTokens",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AccountId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccountTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AccountTokens_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,7 +127,11 @@ namespace Persistence.Migrations
                     LicenseNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Specialty = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rating = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: true),
-                    Profile = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Profile = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -105,8 +152,11 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AccountId = table.Column<long>(type: "bigint", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Phone = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -132,7 +182,11 @@ namespace Persistence.Migrations
                     ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: true),
                     PartnerID = table.Column<long>(type: "bigint", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -155,7 +209,11 @@ namespace Persistence.Migrations
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CurrentWeek = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    PlanJSON = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    PlanJSON = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -182,7 +240,11 @@ namespace Persistence.Migrations
                     PricingOption = table.Column<int>(type: "int", nullable: false),
                     PricePaid = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
                     ReportPDFPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -213,7 +275,11 @@ namespace Persistence.Migrations
                     SleepHours = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AIComment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Mood = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Mood = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -237,7 +303,11 @@ namespace Persistence.Migrations
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NotifType = table.Column<int>(type: "int", nullable: false),
                     SentAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReadAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ReadAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -269,7 +339,11 @@ namespace Persistence.Migrations
                     SensitivityScore = table.Column<byte>(type: "tinyint", nullable: true),
                     AgingScore = table.Column<byte>(type: "tinyint", nullable: true),
                     ResultJSON = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -297,7 +371,11 @@ namespace Persistence.Migrations
                     PlanID = table.Column<long>(type: "bigint", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -320,16 +398,22 @@ namespace Persistence.Migrations
                 name: "AnalysisZones",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ZoneID = table.Column<long>(type: "bigint", nullable: false),
-                    Score = table.Column<byte>(type: "tinyint", nullable: false)
+                    Score = table.Column<byte>(type: "tinyint", nullable: false),
+                    skinAnalysisId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AnalysisZones", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AnalysisZones_SkinAnalysis_Id",
-                        column: x => x.Id,
+                        name: "FK_AnalysisZones_SkinAnalysis_skinAnalysisId",
+                        column: x => x.skinAnalysisId,
                         principalTable: "SkinAnalysis",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -352,7 +436,11 @@ namespace Persistence.Migrations
                     SymptomsText = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AnalysisID = table.Column<long>(type: "bigint", nullable: true),
                     AIResponseJSON = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DoctorEscalated = table.Column<bool>(type: "bit", nullable: false)
+                    DoctorEscalated = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -384,7 +472,11 @@ namespace Persistence.Migrations
                     UnitPrice = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
                     CommissionEarned = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
                     OrderStatus = table.Column<int>(type: "int", nullable: false),
-                    OrderedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    OrderedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -423,7 +515,11 @@ namespace Persistence.Migrations
                     UserID = table.Column<long>(type: "bigint", nullable: false),
                     TakenAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AnalysisID = table.Column<long>(type: "bigint", nullable: true)
+                    AnalysisID = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -468,11 +564,49 @@ namespace Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "SkinZones",
+                columns: new[] { "Id", "CreatedAt", "DeletedAt", "Name", "UpdatedAt", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1L, new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9849), null, "Trán", null, null },
+                    { 2L, new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9869), null, "Má trái", null, null },
+                    { 3L, new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9871), null, "Má phải", null, null },
+                    { 4L, new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9873), null, "Cằm", null, null },
+                    { 5L, new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9874), null, "Mũi", null, null },
+                    { 6L, new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9878), null, "Vùng mắt", null, null },
+                    { 7L, new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9880), null, "Cổ", null, null },
+                    { 8L, new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9881), null, "Xương hàm", null, null },
+                    { 9L, new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9883), null, "Môi trên", null, null },
+                    { 10L, new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9886), null, "Toàn bộ mặt", null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "SubscriptionPlans",
+                columns: new[] { "Id", "BillingCycle", "CreatedAt", "DeletedAt", "Description", "FreeUsageLimitPerWeek", "GracePeriodDays", "Name", "Price", "ResultRetentionDays", "UpdatedAt", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1L, 0, new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9955), null, "Dùng thử phân tích da mặt trong 3 ngày, không lưu trữ kết quả, có quảng cáo.", 1, 0, "Gói miễn phí", 0m, 0, null, null },
+                    { 2L, 0, new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9962), null, "Dùng thử 15 ngày, không lưu kết quả, có quảng cáo, kèm món quà nhỏ tri ân khách hàng.", 2, 0, "Gói cơ bản", 19000m, 0, null, null },
+                    { 3L, 1, new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9968), null, "Phân tích da mặt trong 1 tháng, có lưu kết quả, bỏ quảng cáo, giảm giá 10% cho khách hàng lần đầu.", 5, 3, "Gói Premium", 59000m, 30, null, null },
+                    { 4L, 2, new DateTime(2025, 6, 8, 15, 24, 6, 571, DateTimeKind.Local).AddTicks(9970), null, "Phân tích da mặt trong 3 tháng, có lưu kết quả, nhắc nhở điểm danh, bỏ quảng cáo, giảm giá 15%, tặng quà (nước tẩy trang/sữa rửa mặt).", 7, 5, "Gói Pro", 299000m, 90, null, null }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_Email",
                 table: "Accounts",
                 column: "Email",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccountTokens_AccountId",
+                table: "AccountTokens",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AnalysisZones_skinAnalysisId",
+                table: "AnalysisZones",
+                column: "skinAnalysisId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AnalysisZones_ZoneID",
@@ -582,6 +716,12 @@ namespace Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_Phone",
+                table: "Users",
+                column: "Phone",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UsersSubscriptions_PlanID",
                 table: "UsersSubscriptions",
                 column: "PlanID");
@@ -595,6 +735,9 @@ namespace Persistence.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AccountTokens");
+
             migrationBuilder.DropTable(
                 name: "AnalysisZones");
 

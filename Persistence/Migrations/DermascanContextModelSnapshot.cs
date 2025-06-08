@@ -131,7 +131,10 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.AnalysisZoneScore", b =>
                 {
                     b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -151,9 +154,14 @@ namespace Persistence.Migrations
                     b.Property<long>("ZoneID")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("skinAnalysisId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ZoneID");
+
+                    b.HasIndex("skinAnalysisId");
 
                     b.ToTable("AnalysisZones");
                 });
@@ -704,7 +712,6 @@ namespace Persistence.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<string>("ResultJSON")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte?>("SensitivityScore")
@@ -763,61 +770,61 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2025, 6, 4, 15, 11, 29, 45, DateTimeKind.Local).AddTicks(1703),
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6634),
                             Name = "Trán"
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2025, 6, 4, 15, 11, 29, 45, DateTimeKind.Local).AddTicks(1717),
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6653),
                             Name = "Má trái"
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2025, 6, 4, 15, 11, 29, 45, DateTimeKind.Local).AddTicks(1719),
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6654),
                             Name = "Má phải"
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(2025, 6, 4, 15, 11, 29, 45, DateTimeKind.Local).AddTicks(1720),
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6656),
                             Name = "Cằm"
                         },
                         new
                         {
                             Id = 5L,
-                            CreatedAt = new DateTime(2025, 6, 4, 15, 11, 29, 45, DateTimeKind.Local).AddTicks(1721),
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6657),
                             Name = "Mũi"
                         },
                         new
                         {
                             Id = 6L,
-                            CreatedAt = new DateTime(2025, 6, 4, 15, 11, 29, 45, DateTimeKind.Local).AddTicks(1724),
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6672),
                             Name = "Vùng mắt"
                         },
                         new
                         {
                             Id = 7L,
-                            CreatedAt = new DateTime(2025, 6, 4, 15, 11, 29, 45, DateTimeKind.Local).AddTicks(1725),
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6674),
                             Name = "Cổ"
                         },
                         new
                         {
                             Id = 8L,
-                            CreatedAt = new DateTime(2025, 6, 4, 15, 11, 29, 45, DateTimeKind.Local).AddTicks(1726),
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6675),
                             Name = "Xương hàm"
                         },
                         new
                         {
                             Id = 9L,
-                            CreatedAt = new DateTime(2025, 6, 4, 15, 11, 29, 45, DateTimeKind.Local).AddTicks(1728),
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6676),
                             Name = "Môi trên"
                         },
                         new
                         {
                             Id = 10L,
-                            CreatedAt = new DateTime(2025, 6, 4, 15, 11, 29, 45, DateTimeKind.Local).AddTicks(1730),
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6678),
                             Name = "Toàn bộ mặt"
                         });
                 });
@@ -875,7 +882,7 @@ namespace Persistence.Migrations
                         {
                             Id = 1L,
                             BillingCycle = 0,
-                            CreatedAt = new DateTime(2025, 6, 4, 15, 11, 29, 45, DateTimeKind.Local).AddTicks(1784),
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6744),
                             Description = "Dùng thử phân tích da mặt trong 3 ngày, không lưu trữ kết quả, có quảng cáo.",
                             FreeUsageLimitPerWeek = 1,
                             GracePeriodDays = 0,
@@ -887,7 +894,7 @@ namespace Persistence.Migrations
                         {
                             Id = 2L,
                             BillingCycle = 0,
-                            CreatedAt = new DateTime(2025, 6, 4, 15, 11, 29, 45, DateTimeKind.Local).AddTicks(1790),
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6751),
                             Description = "Dùng thử 15 ngày, không lưu kết quả, có quảng cáo, kèm món quà nhỏ tri ân khách hàng.",
                             FreeUsageLimitPerWeek = 2,
                             GracePeriodDays = 0,
@@ -899,7 +906,7 @@ namespace Persistence.Migrations
                         {
                             Id = 3L,
                             BillingCycle = 1,
-                            CreatedAt = new DateTime(2025, 6, 4, 15, 11, 29, 45, DateTimeKind.Local).AddTicks(1794),
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6756),
                             Description = "Phân tích da mặt trong 1 tháng, có lưu kết quả, bỏ quảng cáo, giảm giá 10% cho khách hàng lần đầu.",
                             FreeUsageLimitPerWeek = 5,
                             GracePeriodDays = 3,
@@ -911,7 +918,7 @@ namespace Persistence.Migrations
                         {
                             Id = 4L,
                             BillingCycle = 2,
-                            CreatedAt = new DateTime(2025, 6, 4, 15, 11, 29, 45, DateTimeKind.Local).AddTicks(1796),
+                            CreatedAt = new DateTime(2025, 6, 8, 15, 29, 27, 819, DateTimeKind.Local).AddTicks(6760),
                             Description = "Phân tích da mặt trong 3 tháng, có lưu kết quả, nhắc nhở điểm danh, bỏ quảng cáo, giảm giá 15%, tặng quà (nước tẩy trang/sữa rửa mặt).",
                             FreeUsageLimitPerWeek = 7,
                             GracePeriodDays = 5,
@@ -986,9 +993,8 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -1038,15 +1044,15 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.AnalysisZoneScore", b =>
                 {
-                    b.HasOne("Domain.Entities.SkinAnalysis", "SkinAnalysis")
-                        .WithMany("AnalysisZoneScores")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.SkinZone", "Zone")
                         .WithMany("AnalysisZoneScores")
                         .HasForeignKey("ZoneID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.SkinAnalysis", "SkinAnalysis")
+                        .WithMany("AnalysisZoneScores")
+                        .HasForeignKey("skinAnalysisId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

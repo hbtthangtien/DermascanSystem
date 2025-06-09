@@ -1,4 +1,6 @@
-﻿using Application.Interfaces.IServices;
+﻿using Application.DTOs.SubscriptionPlan;
+using Application.Interfaces.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,14 +8,15 @@ namespace Presentation.Controllers
 {
     [Route("api/subscription-plan")]
     [ApiController]
+    [Authorize]
     public class SubscriptionPlanController : ControllerBase
     {
         private readonly ISubscriptionPlanService _subscriptionPlanService;
-        private readonly IUserContextService _userContextService;
-        public SubscriptionPlanController(ISubscriptionPlanService subscriptionPlanService, IUserContextService userContextService)
+        private readonly IVietQrServices _vietQrService;
+        public SubscriptionPlanController(ISubscriptionPlanService subscriptionPlanService, IVietQrServices vietQrServices)
         {
             _subscriptionPlanService = subscriptionPlanService;
-            _userContextService = userContextService;
+            _vietQrService = vietQrServices;
 
         }
         [HttpGet]
@@ -22,10 +25,11 @@ namespace Presentation.Controllers
             var dto = await _subscriptionPlanService.GetAllPlan();
             return Ok(dto);
         }
-        [HttpGet("test")]
-        public IActionResult Test()
+        [HttpPost]
+        public async Task<IActionResult> PurchaseSubscriptionPlan(PurchasePlan request)
         {
-            return Ok(_userContextService.GetPlanId());
+            var dto = await _vietQrService.GenerateVietQrCode(request);
+            return Ok(dto);
         }
     }
 }

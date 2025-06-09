@@ -28,6 +28,7 @@ namespace Infrastructure.Extentions
             services.AddScoped<IUserContextService, UserContextService>();
             services.AddScoped<IPlanGuardService, PlanGuardService>();
             services.AddScoped<ISubscriptionPlanService, SubscriptionPlanService>();
+            services.AddScoped<IVietQrServices, VietQrService>();
             services.AddHttpContextAccessor();
         }
         public static void AddAuthenticationByJwt(this IServiceCollection services, IConfiguration configuration)
@@ -60,10 +61,12 @@ namespace Infrastructure.Extentions
             var apiGemini = configuration.GetSection("GeminiApi");
             var cloudinaryConfig = configuration.GetSection("Cloudinary");
             var roboflowConfig = configuration.GetSection("Roboflow");
+            var vietQrConfig = configuration.GetSection("VietQr");
             services.Configure<JwtConfigs>(jwtConfig);
             services.Configure<GeminiApi>(apiGemini);
             services.Configure<CloundinaryConfig>(cloudinaryConfig);
             services.Configure<RoboflowConfig>(roboflowConfig);
+            services.Configure<VietQrConfig>(vietQrConfig);
         }
         public static void SetCorsForAPI(this IServiceCollection services)
         {

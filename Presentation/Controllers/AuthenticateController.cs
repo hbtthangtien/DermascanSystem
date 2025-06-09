@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.Authenticate;
 using Application.DTOs.Token;
 using Application.Interfaces.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace Presentation.Controllers
 {
     [Route("api/auth")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthenticateController : ControllerBase
     {
         private readonly IAuthenticateService _authenticateService;
@@ -25,6 +27,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost("refresh-token")]
+        
         public async Task<IActionResult> RefreshTokenAsync(RefreshTokenRequestDTO request)
         {
             var data = await _jwtService.RefreshToken(request);

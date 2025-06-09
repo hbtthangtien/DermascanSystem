@@ -41,9 +41,9 @@ namespace Application.Services
             // count number of scan per week
             if (planId <= 2 && planId > 0)
             {
-                var startOfWeek = DateTime.Now;
+                var startOfWeek = DateTime.Now.Date;
                 var daysToSubtract = (startOfWeek.DayOfWeek - DayOfWeek.Monday + 7) % 7;
-                startOfWeek.AddDays(daysToSubtract);
+                startOfWeek = startOfWeek.AddDays(-daysToSubtract);
                 var numberOfScanThisWeek = await _unitOfWork.SkinAnalysses
                     .GetInstance()
                     .CountAsync(e=> e.UserID == userId

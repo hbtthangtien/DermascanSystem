@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.Common;
 using Application.DTOs.SubscriptionPlan;
+using Application.DTOs.VietQr;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.IServices
 {
-    public interface ISubscriptionPlanService
+    public interface IVietQrServices
     {
-        public Task<BaseResponse<List<ResponsePlanDTO>>> GetAllPlan();
-
-        public Task<long> MakeOrderPlan(long planId,long userId);
+        public Task<BaseResponse<ResponseVietQr>> GenerateVietQrCode(PurchasePlan purchase);
     }
 }

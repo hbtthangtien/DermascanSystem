@@ -103,9 +103,16 @@ namespace Infrastructure.ExternalServices
             //
         }
 
-        public Task<IdResponse> RevokeToken(RevokeTokenDTO dto)
+        public async Task<IdResponse> RevokeToken(RevokeTokenDTO dto)
         {
-            throw new NotImplementedException();
+            var token = await _unitOfWork.AccountTokens.GetSingle(e => e.Token == dto.RefreshToken)
+                ?? throw new NotFoundException("Token is not existed!!!");
+            // check refresh token is revoked
+            _ = (token.DeletedAt != null) ? throw ExceptionFactory.Business($"Token is revoked at {token.DeletedAt}") : token;
+            // revoke token
+            token.DeletedAt = DateTime.Now;
+            await _unitOfWork.SaveChangeAsync();
+            return new IdResponse { Id = token.Id, Success = true, Message = "Revoke successfully" };
         }
 
         private async Task<string> GenerateRefreshToken(long accountId, int expireDay)
